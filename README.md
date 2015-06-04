@@ -2,8 +2,6 @@ COMP6214 Open Data Innovation Coursework Assignment
 =============
 
 Hosted version: http://komasurfer.com/portfolio/projects/open-data/
-Backup URL: http://jonaso.de/open-data/
-
 
 Data cleansing
 =============
