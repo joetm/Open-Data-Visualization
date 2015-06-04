@@ -1,0 +1,63 @@
+$progressbar_height: 0.4em;
+
+#viz1, #viz2{
+	border:1px solid #808080;
+	width:100%;
+	height:550px;
+	background-color:#FAFAF0;
+	margin-bottom:1.5em;
+	background-image:url(../img/loadingAnimation.gif);
+	background-position:50% 50%;
+	background-repeat:no-repeat;
+	cursor:pointer;
+}
+#viz2{
+	cursor:default;
+}
+.project_meta{
+	font-size:0.8em;
+	margin-bottom:1em;
+}
+.sub-nav{
+	padding-top:0.8em;
+}
+.cc-notice{
+	width:88px;
+	height:31px;
+	border:0px;
+}
+#progressbar_container{
+	/*border:1px solid #888888;*/
+	height:$progressbar_height;
+	width:100%;
+}
+.progressbar{
+	width:0;
+	background-color:#F0F000;
+	height:$progressbar_height;
+}
+
+.black{color:#000000;}
+
+#browserwarning{
+	border-radius:10px;
+	background-color:#DDDDDD;
+	padding:1rem 0 1rem 0;
+}
+#browserwarning columns{
+	float:left;
+}
+#browserwarning img{
+	width:100px;
+	height:auto;
+	border-radius:40px;
+}
+#browserwarning .close-reveal-modal{
+	margin-top:-0.5rem;
+}
+#browserwarning .bigfont{
+	font-size:130%
+}
+#browserwarning .smallfont{
+	font-size:80%
+}

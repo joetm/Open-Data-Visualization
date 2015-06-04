@@ -1,0 +1,254 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Visualisation 1 - Open Data Innovation</title>
+
+    <meta name="description" content="" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/vendor/foundation.css" />
+
+    <link rel="stylesheet" href="css/vendor/fontello.css" />
+
+    <!--main style-->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!--production CSS-->
+    <!--
+    <link rel="stylesheet" href="css/_prod.css" />
+    -->
+
+<style>
+/**** VIZ1-specific styles ****/
+#viz1{
+	overflow:hidden;
+}
+.chart {
+  display: block;
+  margin: auto;
+}
+text {
+  font-size: 11px;
+}
+rect {
+  fill: none;
+}
+#infobox .project_descr_lbl{margin-top:1rem;}
+#infobox .project_name_lbl, #infobox .project_name, #infobox .value_lbl, #infobox .value{
+    font-size:1em;
+}
+#infobox .project_descr_lbl, #infobox .description{
+    font-size:0.8em;
+}
+#infobox .bold{
+    font-weight:800;
+}
+#infobox label{
+    font-weight:200;
+}
+</style>
+
+    <script src="js/vendor/modernizr.js"></script>
+
+</head>
+<body>
+
+	<div id="progressbar_container">
+		<div class="progressbar"></div>
+	</div>
+
+
+	<!--[if lt IE 9]>
+		<div id="browserwarning" class="row">
+			<div class="columns" style="width:10%">
+				<img src="img/chewbacca.jpg" alt="Chewbacca" />
+			</div>
+			<div class="columns" style="width:90%">
+				<script type="text/javascript">
+				function hide_chewbacca () {
+					$('#browserwarning').slideUp('fast');
+				}
+				</script>
+				<a class="right black close-reveal-modal" onclick="hide_chewbacca();">&#215;</a>
+				Chewbacca says: <span class="bigfont">&quot;Hhhrrrrrrrrrrraaaaaaaaaaaaaeeeerrrrrrr&quot;*</span><br />
+				<span class="smallfont">* Why are you not using Chrome?</span><br />
+				Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+			</div>
+		</div>
+	<![endif]-->
+
+
+
+	<div id="helpModal" class="reveal-modal" data-reveal>
+		<h2>Help Instructions</h2>
+		<!--
+		<p class="lead">dsdsdsdsds</p>
+		-->
+		<ul>
+			<li>Select between Project Lifecycle Cost, Planned Cost and Project Count with the selection box at the top right.</li>
+			<li>Hover over a block to see the project information.</li>
+			<li>A cluster represents an agency. Click the cluster to zoom in. Click again to zoom out.</li>
+		</ul>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+
+
+	<article>
+
+		<header class="row">
+			<div class="large-12 columns">
+				<h1>COMP6214 Open Data Innovation</h1>
+				<div class="right">
+					[ <a href="#help" data-reveal-id="helpModal">help</a> ]
+				</div>
+				<div class="project_meta">
+					Student: jo2e14 (27462005)<br />
+					Feb-March 2015
+				</div>
+			</div>
+
+			<div class="small-7 medium-9 large-8 columns">
+				<h3 class="left"><!--Visualisation 1:-->
+				US Government IT Project Spending</h3>
+			</div>
+
+
+			<div class="small-5 medium-3 large-4 columns right">
+
+				<select class="right" name="vis1selector" style="vertical-align:bottom;align:bottom;">
+				  <option value="cost">Lifecycle Project Cost</option>
+				  <option value="planned_cost">Planned Project Cost</option>
+				  <!--
+				  <option value="costvariance">Cost Variance &lt;&gt; 0</option>
+				  <option value="timevariance">Time Variance &lt;&gt; 0</option>
+				  -->
+				  <option value="count">Number of Projects</option>
+				</select>
+
+			</div>
+		</header>
+
+		<div class="row" data-equalizer>
+
+			<div class="small-12 medium-8 columns" data-equalizer-watch>
+				<!-- visualisation 1 -->
+				<div id="viz1"></div>
+			</div>
+
+			<div class="small-12 medium-4 columns" data-equalizer-watch>
+			<aside>
+				<div id="agency_info" class="panel" style="display:none">
+					<h5 class="agency_name">Agency</h5>
+				</div>
+				<div id="instructions" class="panel">
+					<h4 class="title" style="">Usage Instructions</h4>
+					<div class="description" data-equalizer-watch style="font-size:0.8em">
+						<ul>
+							<li>Select between Lifecycle Cost, Planned Cost and Project Count with the selection box at the top right.</li>
+							<li>Hover over a block to see the project information.</li>
+							<li>Click a cluster to zoom in.</li>
+						</ul>
+					</div>
+				</div>
+				<div id="infobox" class="panel" style="display:none">
+
+					<h4 class="title">Project Title</h4>
+
+					<label class="project_name_lbl" for="project_name">Project Name:</label>
+					<div id="project_name" class="bold project_name"></div>
+
+					<label class="value_lbl" for="project_value">Project Lifecycle Cost:</label>
+					<div id="project_value" class="bold value"></div>
+
+					<label class="project_descr_lbl" for="project_descr">Description:</label>
+					<div id="project_descr" class="description" data-equalizer-watch>
+					</div>
+
+				</div>
+			</aside>
+			</div>
+
+		</div>
+
+	</article>
+
+
+
+
+	<footer class="row">
+
+		<div class="large-12 columns">
+			<div class="row centered-text">
+
+				<div class="small-12 medium-4 large-4 columns supporticons">
+					<h3>Data Source:</h3>
+					<a href="https://secure.ecs.soton.ac.uk/notes/comp6214/2015/" data-equalizer-watch>
+						<h4>Coursework CSV</h4>
+						<span class="icon-link-ext"></span> coursework data
+					</a>
+					<p>US Government Projects dataset.<br />
+					Public sector (CC0) license<br />
+					(free to use, reuse and redistribute).</p>
+				</div>
+
+				<div class="small-12 medium-8 large-8 columns supporticons">
+					<div class="">
+						<h3><span class="icon-attention"></span> Important</h3>
+						<p>
+							The underlying coursework dataset has been heavily manipulated from the orginal to introduce many errors. This dataset SHOULD NOT be used to draw any conclusions about US government spending.
+							Your conclusion based upon this data is very likely to be wrong and may lead to harm.
+						</p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="large-12 columns">
+			<hr/>
+			<div class="row">
+				<div class="tiny-12 small-12 medium-6 columns">
+					<p>
+						<a rel="license" href="//creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/CC-88x31.png" /></a>
+					</p>
+				</div>
+
+				<div class="tiny-12 small-12 medium-6 columns text-right">
+					<small>
+					built with <a href="http://foundation.zurb.com/docs/" target="_blank">Foundation</a>
+					</small>
+				</div>
+
+			</div>
+		</div>
+	</footer>
+
+
+	<script src="js/vendor/d3/d3.min.js"></script>
+    <!--
+	<script src="js/vendor/d3/d3.layout.js"></script>
+    -->
+
+	<script src="js/vendor/jquery/dist/jquery.min.js"></script>
+
+	<!--CSV parser-->
+	<script src="js/vendor/PapaParse/papaparse.min.js"></script>
+
+	<!--foundation-->
+	<script src="js/vendor/foundation/foundation.min.js"></script>
+	<script src="js/vendor/foundation/foundation.reveal.min.js"></script>
+
+	<!-- main application-->
+	<script src="app/progressbar.js"></script>
+	<script src="app/field_config.js"></script>
+	<script src="app/vis1.js"></script>
+
+</body>
+</html>

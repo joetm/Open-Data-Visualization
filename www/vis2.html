@@ -1,0 +1,394 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Visualisation 2 - Open Data Innovation</title>
+
+    <meta name="description" content="" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/vendor/foundation.css" />
+    <link rel="stylesheet" href="css/vendor/fontello.css" />
+
+	<!-- C3
+	-->
+	<link href="css/vendor/c3.css" rel="stylesheet" type="text/css" />
+
+    <!--main style-->
+    <link rel="stylesheet" href="css/style.css" />
+
+<style type="text/css">
+body{cursor:default}
+select{cursor:pointer}
+#viz2 {
+	font: 12px sans-serif;
+	margin-bottom:3em;
+	overflow:hidden;
+}
+#president_charts #chart svg .bars{
+	cursor:pointer;
+}
+#vis2selector{
+	width:100%;
+	vertical-align:bottom;
+	align:bottom;
+}
+.text-right{text-align:right}
+.helplink{
+	margin-top:0.8em;
+	cursor:pointer;
+}
+#president_graph{
+	margin-bottom:2em;
+	border:1px solid #AAAAAA;
+	padding:1em;
+	width:100%;
+}
+	#president_graph #presidents .president{
+		position: relative;
+		margin-top:1em;
+	}
+	#president_graph #presidents .president{
+		padding:1em;
+		cursor:pointer;
+		position: relative;
+		border-bottom:1px solid #EEEEEE;
+	}
+	#president_graph #presidents .president .dates{
+		font-size:0.8em;
+		font-family:Courier New, Courier, sans-serif;
+	}
+
+	#president_graph #presidents .selected{
+		background-color:#F0F0F0;
+	}
+	/*http://cssarrowplease.com*/
+	#president_graph #presidents .selected:after,
+	#president_graph #presidents .selected:before {
+		left: 100%;
+		top: 50%;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+	#president_graph #presidents .selected:after {
+		border-color: rgba(136, 183, 213, 0);
+		border-left-color: #F0F0F0;
+		border-width: 30px;
+		margin-top: -30px;
+	}
+	#president_graph #presidents .selected:before {
+		border-color: rgba(240, 153, 153, 0);
+		border-left-color: #F0F0F0;
+		border-width: 36px;
+		margin-top: -36px;
+	}
+
+	#president_graph #presidents .president .pic{
+		background-position:top center;
+		background-size:cover;
+		width:100px;
+		height:100px;
+		border-radius:8px;
+	}
+	#president_charts #chart{
+		width:100%;
+		height:650px;
+		float:left;
+		background-color:#F0F0F0;
+	}
+/*
+#c3-chart{
+	width:20%;
+	float:right;
+	margin:0;
+	padding:0;
+	height:650px;
+}
+*/
+</style>
+
+	<script src="js/vendor/modernizr.js"></script>
+
+</head>
+<body>
+
+	<div id="progressbar_container">
+		<div class="progressbar"></div>
+	</div>
+
+	<!--[if lt IE 9]>
+		<div id="browserwarning" class="row">
+			<div class="columns" style="width:10%">
+				<img src="img/yoda.jpg" alt="Chewbacca" />
+			</div>
+			<div class="columns" style="width:90%">
+				<script type="text/javascript">
+				function hide_chewbacca () {
+					$('#browserwarning').slideUp('fast');
+				}
+				</script>
+				<a class="right black close-reveal-modal" onclick="hide_chewbacca();">&#215;</a>
+				Yoda says:<br />
+				<span class="bigfont">&quot;CHROME YOU MUST USE, my young padawan&quot;</span><br />
+				Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+			</div>
+		</div>
+	<![endif]-->
+
+
+	<div id="helpModal" class="reveal-modal" data-reveal>
+		<h2>Help Instructions</h2>
+		<p class="lead">You can select between three dimensions:</p>
+		<ol>
+			<li>
+				Select between Number of Projects, Project Lifecycle Cost and Planned Project Cost with the selection box at the top left.
+			</li>
+			<li>
+				Filter between projects started and projects ended during the term of the president(s) with the links at the top right.
+			</li>
+			<li>
+				Filter between all presidents (Dec 1992 - March 2013), George W. Bush (Jan 2001 - Jan 2009), and Barack Obama (Jan 2009 - today) by clicking one of the tabs on the left.
+			</li>
+			<li>
+				Click a bar in the graph to view the agency's outlay timeseries. Click multiple agencies to compare the outlays.
+			</li>
+		</ol>
+		<a class="close-reveal-modal">&#215;</a>
+	</div>
+
+
+	<article>
+
+		<header class="row">
+			<div class="large-12 columns">
+				<h1>COMP6214 Open Data Innovation</h1>
+				<div class="right">
+					[ <a href="#help" data-reveal-id="helpModal">help</a> ]
+				</div>
+				<div class="project_meta">
+					Student: jo2e14 (27462005)<br />
+					Feb-March 2015
+				</div>
+			</div>
+			<div class="small-12 columns">
+				<h2 class="left">US Government IT Projects</h2>
+			</div>
+		</header>
+
+
+		<div class="row" id="president_graph">
+
+				<div class="small-5 medium-4 columns">
+					<select id="vis2selector" name="vis2selector">
+					  <option value="count" selected="selected">Number of Projects</option>
+					  <option value="lifecycle_cost_m">Project Lifecycle Cost ($M)</option>
+					  <option value="planned_cost_m">Planned Project Cost ($M)</option>
+					<!--
+					  <option value="cost_variance_m">Project Cost Variance ($M)</option>
+					  <option value="schedule_variance_in_days">Project Time Variance (days)</option>
+					-->
+					</select>
+				</div>
+
+				<div class="small-7 medium-8 columns">
+
+					<dl id="filters" class="sub-nav right">
+						<dt class="show-for-medium-up">Filter:</dt>
+						<dd class="active" id="projects_started"
+							data-tooltip aria-haspopup="true" class="has-tip"
+							data-options="disable_for_touch:true"
+								title="Only show the projects started during the president's term">
+								<a href="#president_graph"><span class="hide-for-small-only">Projects </span>Started</a>
+						</dd>
+<!--
+						<dd>
+							<span data-tooltip aria-haspopup="true" class="has-tip"
+								data-options="disable_for_touch:true"
+								title="Only show the projects that ran at some point during the president's term">
+								<a href="#president_graph">Running Projects</a>
+							</span>
+						</dd>
+-->
+						<dd id="projects_ended" data-tooltip aria-haspopup="true" class="has-tip"
+							data-options="disable_for_touch:true"
+							title="Only show the projects completed during the president's term">
+								<a href="#president_graph"><span class="hide-for-small-only">Projects </span>Completed</a>
+						</dd>
+					</dl>
+
+				</div>
+
+				<div id="presidents" class="left small-12 medium-4 large-4 columns">
+
+					<div class="all president selected tip-right" id="all"
+							data-tooltip aria-haspopup="true"
+							title="Show all projects"
+							data-options="disable_for_touch:true;show_on:large">
+						<div class="clearfix">
+							<div class="pic" style="background-image:url(img/bill-clinton.jpg);width:28%;max-width:80px;margin-right:10px;float:left"></div>
+							<div class="pic" style="background-image:url(img/george-w-bush.jpg);width:28%;max-width:80px;margin-right:10px;float:left"></div>
+							<div class="pic" style="background-image:url(img/barack-obama.jpg);width:28%;max-width:80px;float:left"></div>
+						</div>
+						All Presidents
+						<div class="dates">
+							<span class="minDate">Jan 2001</span>
+							-
+							<span class="maxDate">Jan 2015</span>
+						</div>
+					</div>
+
+					<!-- Bill Clinton: removed.
+						 Reason: only part of his term in dataset-->
+					<!--
+					<div class="first president">
+						<div class="pic" style="background-image:url(img/bill-clinton.jpg);"></div>
+						Bill Clinton
+						<div class="dates">Jan 1993 - Jan 2001</div>
+					</div>
+					-->
+
+					<div class="first president tip-right" id="bush"
+							data-tooltip aria-haspopup="true"
+							title="Filter for G.W. Bush"
+							data-options="disable_for_touch:true;show_on:large">
+						<div class="pic" style="background-image:url(img/george-w-bush.jpg);"></div>
+						George W. Bush
+						<div class="dates">Jan 2001 - Jan 2009</div>
+					</div>
+
+					<div class="president tip-right" id="obama"
+							data-tooltip aria-haspopup="true"
+							title="Filter for B. Obama"
+							data-options="disable_for_touch:true;show_on:large">
+						<div class="pic" style="background-image:url(img/barack-obama.jpg);"></div>
+						Barack Obama
+						<div class="dates">Jan 2009 - <span class="maxDate">today</span>*</div>
+					</div>
+
+				</div>
+
+
+				<div class="right small-12 medium-8 large-8 columns" id="president_charts">
+					<div id="chart"></div>
+				</div>
+
+		</div>
+
+
+		<div id="agency_timeseries_modal" class="reveal-modal" data-reveal>
+			<div id="agency_timedata"></div>
+			<a class="close-reveal-modal">&#215;</a>
+		</div>
+
+
+		<!--
+		<div class="row">
+		  <div class="small-12 columns">
+			<div class="panel">
+				<h3>Information</h3>
+				<p>Info about this vis here</p>
+			</div>
+		  </div>
+		</div>
+		-->
+
+		<div class="row centered-text">
+			<div class="small-12 columns" data-equalizer>
+				<h3>Data Sources:</h3>
+				<div class="small-12 medium-6 large-6 columns supporticons"  data-equalizer-watch>
+					<h3>Coursework CSV</h3>
+					<a href="https://secure.ecs.soton.ac.uk/notes/comp6214/2015/">
+						<span class="icon-link-ext"></span> coursework data
+					</a>
+					<p>
+						US Government IT Projects dataset.
+						License: public sector (CC0) license
+						(free to use, reuse and redistribute).
+					</p>
+				</div>
+				<div class="small-12 medium-6 large-6 columns supporticons" data-equalizer-watch>
+					<h3>US Government Outlays by Agency</h3>
+					<a href="http://www.whitehouse.gov/omb/budget/Historicals">
+						<span class="icon-link-ext"></span> Office of Management and Budget
+					</a>
+					<p>
+						Outlays by US Agency (1962-2020), in millions of dollars.
+						Unknown license.
+					</p>
+				</div>
+			</div>
+		</div>
+
+	</article>
+
+
+
+	<footer class="row">
+
+		<div class="small-12 columns">
+			<div class=""> <!--panel-->
+				<h3><span class="icon-attention"></span> Important</h3>
+				<p>
+					The underlying coursework dataset has been heavily manipulated from the orginal to introduce many errors. This dataset SHOULD NOT be used to draw any conclusions about US government spending.
+					Your conclusion based upon this data is very likely to be wrong and may lead to harm.
+				</p>
+			</div>
+		</div>
+
+		<div class="large-12 columns">
+			<hr/>
+			<div class="row">
+				<div class="tiny-12 small-12 medium-6 columns">
+					<p>
+						<a rel="license" href="//creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="img/CC-88x31.png" /></a>
+					</p>
+				</div>
+
+				<div class="tiny-12 small-12 medium-6 columns">
+					<!--
+					<ul class="inline-list right">
+					<li><a href="http://foundation.zurb.com/docs/" target="_blank">Foundation</a></li>
+					</ul>
+					-->
+				</div>
+
+			</div>
+		</div>
+
+	</footer>
+
+
+	<!-- D3 -->
+	<script src="js/vendor/d3/d3.min.js"></script>
+
+	<!-- C3
+	-->
+	<script src="js/vendor/c3/c3.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="js/vendor/jquery/dist/jquery.min.js"></script>
+
+	<!-- CSV parser -->
+	<script src="js/vendor/PapaParse/papaparse.min.js"></script>
+
+	<!-- Foundation -->
+	<script src="js/vendor/foundation/foundation.min.js"></script>
+	<script src="js/vendor/foundation/foundation.reveal.min.js"></script>
+
+	<!-- main application-->
+	<script src="app/field_config.js"></script>
+	<script src="app/progressbar.js"></script>
+	<script src="app/vis2.js"></script>
+
+</body>
+</html>

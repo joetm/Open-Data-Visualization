@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- based on url=(0073)http://syntagmatic.github.io/parallel-coordinates/examples/slickgrid.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>US Government IT Projects</title>
+
+<!-- SlickGrid -->
+<link rel="stylesheet" href="./vis3/index_files/slick.grid.css" type="text/css">
+<link rel="stylesheet" href="./vis3/index_files/jquery-ui-1.8.16.custom.css" type="text/css">
+<link rel="stylesheet" href="./vis3/index_files/examples.css" type="text/css">
+<link rel="stylesheet" href="./vis3/index_files/slick.pager.css" type="text/css">
+<script src="./vis3/index_files/jquery-1.7.min.js"></script>
+<script src="./vis3/index_files/jquery.event.drag-2.0.min.js"></script>
+<script src="./vis3/index_files/slick.core.js"></script>
+<script src="./vis3/index_files/slick.grid.js"></script>
+<script src="./vis3/index_files/slick.pager.js"></script>
+<script src="./vis3/index_files/slick.dataview.js"></script>
+<!-- End SlickGrid -->
+
+<link rel="stylesheet" type="text/css" href="./vis3/index_files/d3.parcoords.css">
+<link rel="stylesheet" type="text/css" href="./vis3/index_files/style.css">
+<style type="text/css">
+body, html {
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	font-size: 12px;
+}
+body{
+	/*loading animation*/
+	background-image:url(./img/loadingAnimation.gif);
+	background-position:50% 20%;
+	background-repeat:no-repeat;
+}
+#grid, #pager {
+	position: fixed;
+	width: 100%;
+}
+#grid {
+	bottom: 0;
+	height: 300px;
+}
+#pager {
+	bottom: 306px;
+	height: 20px;
+}
+.slick-row:hover {
+	font-weight: bold;
+	color: #069;
+}
+
+#pager .slick-pager .slick-pager-nav{
+	display:none;
+}
+#projects svg text{
+	font-size:1rem;
+}
+</style>
+
+<script src="./vis3/index_files/d3.min.js"></script>
+<script src="./vis3/index_files/d3.parcoords.js"></script>
+<script src="./vis3/index_files/divgrid.js"></script>
+
+</head>
+<body>
+
+<div id="projects" class="parcoords" style="height:240px;"></div>
+<div id="grid"></div>
+<div id="pager"></div>
+
+
+<script id="brushing" src="./app/vis3.js"></script>
+
+</body></html>

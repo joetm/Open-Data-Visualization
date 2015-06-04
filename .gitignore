@@ -1,3 +1,18 @@
+
+COMP6214-submission-Oppenlaender.zip
+README.txt
+
+www/.sass-cache
+www/BAK/
+www/app/BAK/
+www/node_modules
+www/js/vendor/c3/htdocs
+www/js/vendor/c3/src
+www/js/vendor/c3/spec
+www/js/vendor/jquery/src
+www/js/vendor/moment
+www/js/vendor/PapaParse/tests
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
