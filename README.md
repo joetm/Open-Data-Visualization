@@ -1,8 +1,7 @@
 COMP6214 Open Data Innovation Coursework Assignment
 =============
-Jonas Oppenlaender (jo2e14, 27462005)
 
-Hosted version: http://komasurfer.com/open-data/
+Hosted version: http://komasurfer.com/portfolio/projects/open-data/
 Backup URL: http://jonaso.de/open-data/
 
 
